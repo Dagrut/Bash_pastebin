@@ -1,0 +1,113 @@
+<html>
+	<head>
+		<script type="text/javascript">
+			function itm(id) {
+				return(document.getElementById(id));
+			}
+			
+			function ajax() {
+				var r;
+				try { r = new XMLHttpRequest(); return(r); }
+				catch(e) {}
+				try { r = new ActiveXObject("Msxml2.XMLHTTP"); return(r); }
+				catch(e) {}
+				try { r = new ActiveXObject("Microsoft.XMLHTTP"); return(r); }
+				catch(e) {}
+				
+				return(null);
+			}
+			
+			function request_get() {
+				xmlhttp = ajax();
+				xmlhttp.open('GET', '/' + itm('tag').value, true);
+				xmlhttp.setRequestHeader('X-Bash-Pastebin-Ajax', 'true');
+				itm('status').innerHTML = 'Sending GET request...';
+				xmlhttp.onreadystatechange = function() {
+					if(xmlhttp.readyState == 4){
+						if(xmlhttp.status == 200 || window.location.href.indexOf("http") == -1) {
+							itm("data").value = xmlhttp.responseText;
+							itm('status').innerHTML = 'GET response received';
+						}
+						else {
+							itm('status').innerHTML = 'GET ERROR!';
+							alert("An error occured :\n" + xmlhttp.responseText);
+						}
+					}
+				}
+				xmlhttp.send(null);
+			}
+			
+			function request_put(){
+				xmlhttp = ajax();
+				xmlhttp.open('PUT', '/' + itm('tag').value, true);
+				xmlhttp.setRequestHeader('X-Bash-Pastebin-Ajax', 'true');
+				itm('status').innerHTML = 'Sending PUT request...';
+				xmlhttp.onreadystatechange = function() {
+					if(xmlhttp.readyState == 4) {
+						if(xmlhttp.status == 200 || window.location.href.indexOf("http") == -1) {
+							itm('status').innerHTML = 'PUT done!';
+						}
+						else {
+							itm('status').innerHTML = 'PUT ERROR!';
+							alert("An error occured :\n" + xmlhttp.responseText);
+						}
+					}
+				}
+				xmlhttp.send(itm('data').value);
+			}
+			
+			function request_list(){
+				xmlhttp = ajax();
+				xmlhttp.open('LIST', '/' + itm('tag').value, true);
+				xmlhttp.setRequestHeader('X-Bash-Pastebin-Ajax', 'true');
+				itm('status').innerHTML = 'Sending LIST request...';
+				xmlhttp.onreadystatechange = function() {
+					if(xmlhttp.readyState == 4) {
+						if(xmlhttp.status == 200 || window.location.href.indexOf("http") == -1) {
+							itm("data").value = decodeURIComponent(xmlhttp.responseText);
+							itm('status').innerHTML = 'LIST response received';
+						}
+						else {
+							itm('status').innerHTML = 'LIST ERROR!';
+							alert("An error occured :\n" + xmlhttp.responseText);
+						}
+					}
+				}
+				xmlhttp.send(null);
+			}
+			function request_del(){
+				xmlhttp = ajax();
+				xmlhttp.open('DELETE', '/' + itm('tag').value, true);
+				xmlhttp.setRequestHeader('X-Bash-Pastebin-Ajax', 'true');
+				itm('status').innerHTML = 'Sending DELETE request...';
+				xmlhttp.onreadystatechange = function() {
+					if(xmlhttp.readyState == 4) {
+						if(xmlhttp.status == 200 || window.location.href.indexOf("http") == -1) {
+							itm('status').innerHTML = 'DELETE ok';
+						}
+						else {
+							itm('status').innerHTML = 'DELETE ERROR!';
+							alert("An error occured :\n" + xmlhttp.responseText);
+						}
+					}
+				}
+				xmlhttp.send(null);
+			}
+		</script>
+	</head>
+	<body>
+		<form onSubmit="return(false);">
+			<p>
+				Tag:<br />
+				<input type="text" id="tag" style="width: 75%" /><br />
+				Data:<br />
+				<textarea id="data" style="width: 75%; height: 60%;"></textarea><br />
+				Status: <span id="status">Nothing</span><br />
+				<input type="button" onClick="request_get();"  value="Get" />
+				<input type="button" onClick="request_put();"  value="Send" />
+				<input type="button" onClick="request_list();" value="Get list" /><br /><br />
+				<input type="button" onClick="request_del();" value="Delete" />
+			</p>
+		</form>
+	</body>
+</html>
