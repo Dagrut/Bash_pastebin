@@ -45,20 +45,20 @@ Requirements
 ------------
 
 * Browser
-** Any browser with basic javascript support should do the job
+* * Any browser with basic javascript support should do the job
 * Bash
-** netcat
-** echo
-** tr
-** cut
-** grep
-** head
-** mkdir
-** rm
-** cat
-** ls
-** base64
-** sed
+* * netcat
+* * echo
+* * tr
+* * cut
+* * grep
+* * head
+* * mkdir
+* * rm
+* * cat
+* * ls
+* * base64
+* * sed
 
 FAQ
 ---
