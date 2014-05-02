@@ -47,7 +47,7 @@ Requirements
 * Browser
   * Any browser with basic javascript support should do the job
 * Bash
-  * netcat
+  * netcat (traditional, the one written by `*Hobbit*`)
   * echo
   * tr
   * cut
